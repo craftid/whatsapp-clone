@@ -15,8 +15,9 @@ const LeftComponent = styled(Box)`
 `
 
 const RightComponent = styled(Box)`
-	width: 73%;
+	flex: 1;
 	min-width: 300px;
+	display: flex;
 	border-left: 1px solid rgba(0, 0, 0, 0.14);
 `
 

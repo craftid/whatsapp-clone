@@ -36,15 +36,13 @@ const ChatBox = () => {
 				senderId: account.sub,
 				receiverId: person.sub,
 			})
-			console.log(`gpt convo`, data)
 			setConversation(data)
 		}
 		getConversationDetails()
 	}, [person.sub])
 
 	return (
-		<Box style={{ height: "75%" }}>
-			{JSON.stringify(conversation) === "{}" && <CircularProgress />}
+		<Box style={{ flex: 1 }}>
 			<ChatHeader person={person} />
 			<Messages person={person} conversation={conversation} />
 		</Box>
