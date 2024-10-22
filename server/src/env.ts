@@ -15,9 +15,11 @@ const zEnv = z.object({
 	PORT: z.string().default("3000"),
 	NODE_ENV: z.string().default("development"),
 	MONGO_URI: z.string().default("mongodb://admin:password@localhost:27017"),
-	MONGO_DATABASE: z.string().default("test"),
+	MONGO_DATABASE: z.string().default("whatsapp-clone"),
 	JWT_SECRET: z.string().optional().default("secret"),
 	PUBLIC_URL: z.string().optional().default("http://localhost:5173"),
+	VITE_API_URL: z.string().url().optional().default("http://localhost:3000"),
+	VITE_PUBLIC_URL: z.string().url().optional().default("http://localhost:5173"),
 })
 
 let env: TypeOf<typeof zEnv>

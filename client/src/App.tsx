@@ -1,50 +1,39 @@
-import { useState } from "react"
+import { Suspense } from "react"
+import { CircularProgress, CssBaseline, ThemeProvider } from "@mui/material"
+import { GoogleOAuthProvider } from "@react-oauth/google"
 
-import reactLogo from "./assets/react.svg"
-import viteLogo from "/vite.svg"
+import Messenger from "@/components/messenger"
 
-import "./App.css"
+import { AccountProvider } from "@/context/account-provider"
+import UserProvider from "@/context/user-provider"
+import theme from "@/theme"
 
-function App() {
-	const [count, setCount] = useState(0)
-	const [apiData, setApiData] = useState<{ message: string } | null>(null)
+export interface GoogleOAuthUser {
+	_id: string
+	sub: string
+	email: string
+	name: string
+	imageUrl: string
+	picture: string
+}
 
-	const getApi = async () => {
-		const res = await fetch("/api")
-		const data = await res.json()
-		console.log(data)
-		setApiData(data)
-	}
+const clientId =
+	"40987970669-prf8vd7t6kquqjr9fumfhk55q19h1m85.apps.googleusercontent.com"
 
+export const App = () => {
 	return (
-		<>
-			<div>
-				<a href="https://vitejs.dev" target="_blank">
-					<img src={viteLogo} className="logo" alt="Vite logo" />
-				</a>
-				<a href="https://react.dev" target="_blank">
-					<img src={reactLogo} className="logo react" alt="React logo" />
-				</a>
-			</div>
-			<h1>Vite + React</h1>
-			<div className="card">
-				<button onClick={() => setCount((count) => count + 1)}>
-					count is {count}
-				</button>
-
-				{apiData ? (
-					<p>{apiData.message}</p>
-				) : (
-					<button onClick={getApi}>Fetch API</button>
-				)}
-				<p>
-					Edit <code>src/App.tsx</code> and save to test HMR
-				</p>
-			</div>
-			<p className="read-the-docs">
-				Click on the Vite and React logos to learn more
-			</p>
-		</>
+		<GoogleOAuthProvider clientId={clientId}>
+			<UserProvider>
+				<AccountProvider>
+					<ThemeProvider theme={theme}>
+						<CssBaseline />
+						<Suspense fallback={<CircularProgress />}>
+							<Messenger />
+						</Suspense>
+					</ThemeProvider>
+				</AccountProvider>
+			</UserProvider>
+		</GoogleOAuthProvider>
 	)
 }
 
